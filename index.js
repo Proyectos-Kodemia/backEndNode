@@ -1,11 +1,10 @@
 const express = require("express");
+const apiRouter = require("./routes");
 const config = require("./lib/config");
-const apiRouter = require("./routes/index.js");
 const { logErrors, errorHandler } = require("./middlewares/errorHandlers");
 const authHandler = require("./middlewares/authHandlers");
 const cors = require("cors");
 const db = require("./lib/db");
-const apiRouter = require("./routes");
 
 const app = express();
 const port = config.app.port;
@@ -14,9 +13,9 @@ app.use(cors());
 
 app.use(express.json());
 
-app.get("/", (request, response) => {
-  response.send("Hello World!");
-});
+// app.get("/", (request, response) => {
+//   response.send("Hello World!");
+// });
 
 apiRouter(app);
 
