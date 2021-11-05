@@ -1,0 +1,30 @@
+{
+  "name": "backendnode",
+  "version": "1.0.0",
+  "description": "Reto de backend",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Proyectos-Kodemia/backEndNode.git"
+  },
+  "keywords": [
+    "Este",
+    "es",
+    "un",
+    "proyecto",
+    "de",
+    "backend"
+  ],
+  "author": "OscarGalvez13,FanyAlvarez, IsraeliPS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Proyectos-Kodemia/backEndNode/issues"
+  },
+  "homepage": "https://github.com/Proyectos-Kodemia/backEndNode#readme"
+}
