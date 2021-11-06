@@ -22,8 +22,8 @@ app.use(express.json());
 
 apiRouter(app);
 
-// app.use(logErrors);
-// app.use(errorHandler);
+app.use(logErrors);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Listening on port: http://localhost:${port}`);
