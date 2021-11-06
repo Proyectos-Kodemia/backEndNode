@@ -10,6 +10,7 @@ const schema = new Schema({
   },
   title: {
     type: String,
+    trim: true,
     required: true,
   },
   tags: {
@@ -17,9 +18,12 @@ const schema = new Schema({
   },
   textContainer: {
     type: String,
+    trim: true,
+    required: true,
   },
   dateCreation: {
     type: Date,
+    default: Date.now,
   },
 });
 
