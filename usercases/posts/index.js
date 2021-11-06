@@ -22,8 +22,14 @@ const getById = async (idPost) => {
 };
 
 
+const del = (postId) => {
+	return Post.model.findByIdAndDelete(postId).exec()
+}
+
+
 module.exports ={
     create,
     get,
     getById,
+    del,
 }
