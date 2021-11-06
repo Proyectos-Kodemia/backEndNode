@@ -14,6 +14,8 @@ const create=async (dataUser)=>{
 
 const get = async () => {
     return await User.model.find({}).exec();
+
+    // incluir parametros search y date
 };
 
 const getById = async (idUser) => {
@@ -25,6 +27,8 @@ const getByUser = async (user) => {
     return await User.model.findOne(user).exec();
     
 };
+
+
 
 const authenticate = async (user, password) => {
     const hash=user.password;
@@ -41,7 +45,7 @@ const logIn = async(username,password)=>{
     
     if(isValid){
         const payload = {
-            "id":userObject._id,
+            "sub":userObject._id,
             "role":userObject.role
         }
         console.log(payload)

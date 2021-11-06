@@ -23,7 +23,7 @@ const getById = async (idPost) => {
 
 
 const del = (postId) => {
-	return Post.findByIdAndDelete(postId).exec()
+	return Post.model.findByIdAndDelete(postId).exec()
 }
 
 

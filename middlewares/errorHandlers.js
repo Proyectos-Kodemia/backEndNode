@@ -3,7 +3,9 @@ const logErrors = (error, request, response, next)=>{
     next(error)
 }
 
-const errorHandler = (error,request, response) =>{
+const errorHandler = (error,request, response,next) =>{
+    console.log("Middleware errores",response)
+
     response.status(500).json({
         message:error.message,
         stack:error.stac,
