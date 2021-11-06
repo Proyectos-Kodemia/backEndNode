@@ -23,23 +23,17 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-
-
-
-
-
-
-router.get("/", async (req, res, next) => {
-  try {
-  } catch (err) {
-    next(err);
-    console.log(err);
-  }
-});
-
 router.get("/:id", async (req, res, next) => {
+   const {id} = req.params
+
+    const userObject = await user.getById(id)
   try {
-  } catch (err) {
+    res.json({
+                
+      id:userObject.id,
+      userName:userObject.name,
+    })  
+  }catch (err) {
     next(err);
     console.log(err);
   }
@@ -49,6 +43,11 @@ router.get("/:id", async (req, res, next) => {
 
 router.patch("/:id", async (req, res, next) => {
   try {
+    const {id}=req.params
+    const userData=res.body
+
+    const userUpdate = await user.update(id,userData)
+    
   } catch (err) {
     next(err);
     console.log(err);

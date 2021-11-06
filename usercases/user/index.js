@@ -1,5 +1,7 @@
 const User=require("../../models/users");
 const encrypt=require("../../lib/crypt");
+const jwt = require("../../lib/jwt");
+
 
 const create=async (dataUser)=>{
     const {name,username,password,email,role}=dataUser;
@@ -15,11 +17,13 @@ const get = async () => {
 };
 
 const getById = async (idUser) => {
-    return await User.model.findByID(idUser).exec();
+    return await User.model.findById(idUser).exec();
 };
 
 const getByUser = async (user) => {
+    console.log(user)
     return await User.model.findOne(user).exec();
+    
 };
 
 const authenticate = async (user, password) => {
@@ -28,11 +32,13 @@ const authenticate = async (user, password) => {
 };
 
 // Proceso LogIn de usuarios
-const logIn = async(userName,password)=>{
-    const userObject = await getByUserName({userName})
+const logIn = async(username,password)=>{
+    
+    const userObject = await getByUser({username})
+ 
     const hash = userObject.password
     const isValid = await encrypt.verifyPassword(password,hash)
-
+    
     if(isValid){
         const payload = {
             "id":userObject._id,
@@ -44,11 +50,11 @@ const logIn = async(userName,password)=>{
     }else{
         error()
     }
-    
-    
+}
+
+const update=async(id,userData)=>{
 
 }
 
 
-
-module.exports = { create, get, getById, getByUser, authenticate};
+module.exports = { create, get, getById, getByUser, authenticate,logIn,update};
