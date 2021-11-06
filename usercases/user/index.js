@@ -35,7 +35,7 @@ const authenticate = async (user, password) => {
 const logIn = async(username,password)=>{
     
     const userObject = await getByUser({username})
- 
+    console.log("userOBject:",userObject)
     const hash = userObject.password
     const isValid = await encrypt.verifyPassword(password,hash)
     
