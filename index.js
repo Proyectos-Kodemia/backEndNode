@@ -18,7 +18,7 @@ app.use(express.json());
 // });
 
 apiRouter(app);
-
+console.log("iniciando")
 // app.use(logErrors);
 // app.use(errorHandler);
 
