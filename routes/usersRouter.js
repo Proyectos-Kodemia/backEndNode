@@ -45,6 +45,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+// Usamos userhHandler para que solo el usuario puede modificar su propio registro
 router.patch("/:id",userHandler, async (req, res, next) => {
   try {
     const {id}=req.params
