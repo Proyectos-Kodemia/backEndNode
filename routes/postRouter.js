@@ -7,13 +7,37 @@ const {authHandler,userHandler} = require("../middlewares/authHandlers")
 const router = express.Router();
 
   
+router.get("/", async (req, res, next) => {
+       
+   try {
+    const postAll = await post.get()
+    res.status(200).json({
+        ok:true,
+        message:`All Posts retrieved`,
+        payload:{
+            postAll,
+        }
+    })
+   }catch (err) {
+     next(err);
+     console.log(err);
+   }
+ });
+
+
   
 router.get("/:id", async (req, res, next) => {
     const {id} = req.params
- 
-     const userObject = await user.getById(id)
+    
    try {
-     
+    const postId = await post.getById(id)
+    res.status(200).json({
+        ok:true,
+        message:`Post {id} retrieved`,
+        payload:{
+            postId,
+        }
+    })
    }catch (err) {
      next(err);
      console.log(err);
