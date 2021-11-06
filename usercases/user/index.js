@@ -52,7 +52,9 @@ const logIn = async(username,password)=>{
     }
 }
 
-const update=async(id,userData)=>{
+const update=async(userId,userData)=>{
+    const {username,name} = userData
+    return await User.model.findByIdAndUpdate(userId,{username,name}).exec()
 
 }
 

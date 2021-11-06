@@ -23,6 +23,11 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+// A partir de este punto se necesita
+
+
+
+
 router.get("/:id", async (req, res, next) => {
    const {id} = req.params
 
@@ -39,14 +44,18 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-
-
 router.patch("/:id", async (req, res, next) => {
   try {
     const {id}=req.params
-    const userData=res.body
+    const userData=req.body
 
+    console.log(userData)
     const userUpdate = await user.update(id,userData)
+    res.status(200).json({
+      status:true,
+      message:"Update succesfull",
+      payload:{userUpdate}
+    })
     
   } catch (err) {
     next(err);
