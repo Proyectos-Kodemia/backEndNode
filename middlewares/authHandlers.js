@@ -5,7 +5,7 @@ const authHandler = async (req,res,next)=>{
     
 
     try{
-        const payload = await jwt.verify(token)
+        const payload = await jwt.verifyToken(token)
         next()
         
     }catch(error){
@@ -24,7 +24,7 @@ const userHandler = async (req,res,next)=>{
 
     const {token} =req.headers
     console.log("token:", token)
-    const payload = await jwt.verify(token)
+    const payload = await jwt.verifyToken(token)
     console.log("payload:",payload)
     const {id} = payload
     console.log("id",id)

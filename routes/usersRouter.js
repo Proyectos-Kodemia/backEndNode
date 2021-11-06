@@ -2,6 +2,7 @@ const express = require("express");
 const user = require("../usercases/user")
 const jwt = require("../lib/jwt");
 const bcrypt = require("bcrypt");
+const {authHandler,userHander} = require("../middlewares/authHandlers")
 
 const router = express.Router();
 
@@ -23,9 +24,9 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// A partir de este punto se necesita
+// A partir de este punto se necesita token
 
-
+router.use(authHandler)
 
 
 router.get("/:id", async (req, res, next) => {
@@ -54,7 +55,11 @@ router.patch("/:id", async (req, res, next) => {
     res.status(200).json({
       status:true,
       message:"Update succesfull",
-      payload:{userUpdate}
+      payload:{
+        userId:userUpdate._id,
+        name:userUpdate.name,
+        username:userUpdate.username,
+      }
     })
     
   } catch (err) {
