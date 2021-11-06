@@ -6,7 +6,7 @@ const app = express();
 const apiRouter = require("./routes");
 
 const { logErrors, errorHandler } = require("./middlewares/errorHandlers");
-const authHandler = require("./middlewares/authHandlers");
+const {authHandler} = require("./middlewares/authHandlers");
 
 
 app.use(cors());

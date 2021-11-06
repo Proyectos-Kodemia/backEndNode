@@ -4,8 +4,8 @@ const authRouter=require("./authRouter")
 
 const apiRouter=(app)=>{
     app.use("/users",userRouter);
-    app.use("/posts",postRouter);
-    app.use("/auth",authRouter);
+    // app.use("/posts",postRouter);
+    // app.use("/auth",authRouter);
 }
 
 module.exports=apiRouter;
