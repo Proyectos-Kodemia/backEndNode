@@ -2,7 +2,7 @@ const express = require("express");
 const user = require("../usercases/user")
 const jwt = require("../lib/jwt");
 const bcrypt = require("bcrypt");
-const {authHandler,userHander} = require("../middlewares/authHandlers")
+const {authHandler,userHandler} = require("../middlewares/authHandlers")
 
 const router = express.Router();
 
@@ -45,7 +45,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:id",userHandler, async (req, res, next) => {
   try {
     const {id}=req.params
     const userData=req.body
@@ -68,7 +68,7 @@ router.patch("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id",userHandler, async (req, res, next) => {
   try {
   } catch (err) {
     next(err);
