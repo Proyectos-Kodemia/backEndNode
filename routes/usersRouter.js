@@ -7,6 +7,12 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
+    const users=await user.get();
+    res.status(200).json({
+      status: true,
+      message: "Done",
+      payload: { users },
+    });
   } catch (err) {
     next(err);
     console.log(err);
