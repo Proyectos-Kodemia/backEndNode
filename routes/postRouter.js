@@ -26,8 +26,6 @@ router.get("/", async (req, res, next) => {
                 postRetrieve,
             }
         })
-    
-    
    }catch (err) {
      next(err);
      console.log(err);
@@ -37,64 +35,39 @@ router.get("/", async (req, res, next) => {
 
   
 router.get("/:id", async (req, res, next) => {
-    const {id} = req.params
-    
-   try {
+  const {id} = req.params
+  try {
     const postId = await post.getById(id)
        if(postId){
-        
-        res.status(200).json({
+          res.status(200).json({
             ok:true,
             message:`Post {id} retrieved`,
             payload:{
                 postId,
-            }
+          }
         })
-       }else{
-        res.status(404).json({
+        }else{
+          res.status(404).json({
             ok:false,
             message:`Post id not found`,
             payload:{
                 postId,
             }
-        })
-       }
-    
+          })
+        }
    }catch (err) {
      next(err);
      console.log(err);
-   }
- });
-
-  const userObject = await user.getById(id);
-  try {
-  } catch (err) {
-    next(err);
-    console.log(err);
-  }
+    }
 });
 
-// A partir de este punto se necesita token
-
 router.use(authHandler);
-
-router.post("/", async (req, res, next) => {
-  const token = req.headers;
-  const dataPost = req.body;
-
-  /// Hay que verificar esta logica para traer el nombre
-  // const payload = await jwt.verifyToken(token)
-  // console.log(payload)
-  // const {id} = payload
-  // const userName = user.getById(id)
-  const userName = "Prueba";
 
 router.post("/", async (req, res, next) => {
     const {token} = req.headers
     
     const dataPost = req.body
 
-    // / Hay que verificar esta logica para traer el nombre
     const payload = await jwt.verifyToken(token)
     
     const {sub} = payload
@@ -104,28 +77,35 @@ router.post("/", async (req, res, next) => {
     try {
         
        const postCreated = await post.create(dataPost,userName)
+    } catch (err) {
+        next(err);
+        console.log(err);
+    }
+    
+    
+})   
+
+
+
+
 
 // Usamos userhHandler para que solo el usuario puede modificar su propio registro
 router.patch("/:id", userHandler, async (req, res, next) => {
   try {
-    const { id } = res.params;
-    const { title, textContainer } = res.body;
+    const { id } = req.params;
+    const { title, textContainer } = req.body;
 
     const payload = await post.update(id, { title, textContainer });
     if (!payload) {
       throw new Error("Post not found");
     }
-
-  
-  // Usamos userhHandler para que solo el usuario puede modificar su propio registro
-  router.patch("/:id", async (req, res, next) => {
-    try {
-      
     } catch (err) {
-      next(err);
-      console.log(err);
-    }
-  });
+        next(err);
+        console.log(err);
+}
+})
+  
+ 
   
   router.delete("/:id", async (req, res, next) => {
       const {id}= req.params
