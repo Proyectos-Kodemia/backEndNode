@@ -13,9 +13,9 @@ const create=async (dataUser)=>{
 };
 
 const get = async () => {
+    
     return await User.model.find({}).exec();
 
-    // incluir parametros search y date
 };
 
 const getById = async (idUser) => {

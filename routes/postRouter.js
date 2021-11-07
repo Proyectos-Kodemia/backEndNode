@@ -8,24 +8,25 @@ const router = express.Router();
 
   
 router.get("/", async (req, res, next) => {
+    //posts/?search=
+    //posts/?date=
        
    const {search} = req.query
    const {date} = req.query
+
+   console.log("search req.query:",search)
+   console.log("date req.query:",date)
    try {
-    if(search){
-
-    }else if(date){
-
-    }else{
-        const postAll = await post.get()
+    
+        const postRetrieve = await post.get(search,date)
         res.status(200).json({
             ok:true,
-            message:`All Posts retrieved`,
+            message:`Posts retrieved`,
             payload:{
-                postAll,
+                postRetrieve,
             }
         })
-    }
+    
     
    }catch (err) {
      next(err);
@@ -75,12 +76,12 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
     const {token} = req.headers
-    console.log(token)
+    
     const dataPost = req.body
 
     // / Hay que verificar esta logica para traer el nombre
     const payload = await jwt.verifyToken(token)
-    console.log(payload)
+    
     const {sub} = payload
     const userObject = await user.getById(sub)    
     const userName = userObject.username

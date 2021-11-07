@@ -11,10 +11,32 @@ const create=async (dataPost,userName)=>{
 
 
 
+//date= aaaa-mm-dd
 
 
-const get = async () => {
-    return await Post.model.find({}).exec();
+const get = async (search,date) => {
+    let resp
+    if(search){
+        console.log("get user case:",search)
+        // .find({ $or: [ ] })
+        // {title:{ $regex:search}}
+        let regex=`/${search}/ig`
+        
+
+        resp=await Post.model.find({$or:[{userName:{$regex:regex}},{title:{$regex:regex}},{tags:{$regex:regex}}, {textContainer:{$regex:regex}}]}).exec();
+    }else if(date){
+        
+        const dateInit = new Date(date)
+        const dateLast = dateInit.setMinutes(dateInit.getMinutes()+1440)
+        console.log("datelast",dateLast)
+        resp=await Post.model.find({dateCreation:{ $gte: date, $lte: dateLast }}).exec();
+        
+    }else{
+        resp=await Post.model.find({}).exec();
+    }
+    console.log("respuesta del search",resp)
+    return resp
+// incluir parametros search y date
 };
 
 const getById = async (idPost) => {
