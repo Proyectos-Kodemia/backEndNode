@@ -12,9 +12,7 @@ router.get("/", async (req, res, next) => {
     res.status(200).json({
       status:true,
       message:"Tags retrieved succesfully",
-      payload:{
-        tagsObject,
-      }
+      payload:tagsObject,
     });
   } catch (err) {
     next(err);

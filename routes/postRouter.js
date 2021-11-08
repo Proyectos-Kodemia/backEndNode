@@ -13,8 +13,8 @@ router.get("/", async (req, res, next) => {
   const { search } = req.query;
   const { date } = req.query;
 
-  console.log("search req.query:", search);
-  console.log("date req.query:", date);
+  // console.log("search req.query:", search);
+  // console.log("date req.query:", date);
   try {
     const postRetrieve = await post.get(search, date);
     res.status(200).json({
@@ -68,9 +68,7 @@ router.post("/", async (req, res, next) => {
     const {sub} = payload
     const userObject = await user.getById(sub)    
     const userName = userObject.username
-    console.log(sub)
-    console.log(userName)
-   
+    
     try {
         
        const postCreated = await post.create(dataPost,userName,sub)
@@ -80,24 +78,27 @@ router.post("/", async (req, res, next) => {
        })
     } catch (err) {
         next(err);
-        console.log(err);
+        console.log("err",err);
     }
     
     
 })   
-
-
 
 // Usamos userhHandler para que solo el usuario puede modificar su propio registro
 router.patch("/:id", postHandler, async (req, res, next) => {
   try {
     const { id } = req.params;
     const { title, textContainer,image,tags } = req.body;
-
+    
     const payload = await post.update(id, { title, textContainer,image,tags });
+    
       if (!payload) {
         throw new Error("Post not found");
       }
+      res.status(200).json({
+        status:true,
+        message:"Successfully updated"
+      })
     }catch (err){
 
       next(err);
@@ -105,8 +106,6 @@ router.patch("/:id", postHandler, async (req, res, next) => {
     }
   }
 )
-
-
 
 router.delete("/:id",postHandler, async (req, res, next) => {
   const { id } = req.params;

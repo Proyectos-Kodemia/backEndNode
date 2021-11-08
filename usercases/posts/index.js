@@ -17,7 +17,7 @@ const create=async (dataPost,userName,idAuthor)=>{
 const get = async (search,date) => {
     let resp
     if(search){
-        console.log("get user case:",search)
+        // console.log("get user case:",search)
         // .find({ $or: [ ] })
         // {title:{ $regex:search}}
         let regx=`/${search}/ig`
@@ -34,7 +34,7 @@ const get = async (search,date) => {
     }else{
         resp=await Post.model.find({}).exec();
     }
-    console.log("respuesta del search",resp)
+    // console.log("respuesta del search",resp)
     return resp
 // incluir parametros search y date
 };
