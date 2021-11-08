@@ -2,7 +2,7 @@ const express = require("express");
 const post = require("../usercases/posts");
 const user = require("../usercases/user");
 const jwt = require("../lib/jwt");
-const { authHandler, userHandler } = require("../middlewares/authHandlers");
+const { authHandler, userHandler,postHandler} = require("../middlewares/authHandlers");
 
 const router = express.Router();
 
@@ -73,10 +73,16 @@ router.post("/", async (req, res, next) => {
     const {sub} = payload
     const userObject = await user.getById(sub)    
     const userName = userObject.username
+    console.log(sub)
+    console.log(userName)
    
     try {
         
-       const postCreated = await post.create(dataPost,userName)
+       const postCreated = await post.create(dataPost,userName,sub)
+       res.status(200).json({
+        status:true, 
+        message:" Post created succesfully",
+       })
     } catch (err) {
         next(err);
         console.log(err);
@@ -90,7 +96,7 @@ router.post("/", async (req, res, next) => {
 
 
 // Usamos userhHandler para que solo el usuario puede modificar su propio registro
-router.patch("/:id", userHandler, async (req, res, next) => {
+router.patch("/:id", postHandler, async (req, res, next) => {
   try {
     const { id } = req.params;
     const { title, textContainer } = req.body;
@@ -107,7 +113,7 @@ router.patch("/:id", userHandler, async (req, res, next) => {
   
  
   
-  router.delete("/:id", async (req, res, next) => {
+  router.delete("/:id",postHandler, async (req, res, next) => {
       const {id}= req.params
     try {
         const postDel = await post.del(id)

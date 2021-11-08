@@ -5,6 +5,10 @@ const schema = new Schema({
   userName: {
     type: String,
   },
+  idAuthor: {
+    type: String,
+    required:false,
+  },
   image: {
     type: String,
   },
@@ -21,10 +25,20 @@ const schema = new Schema({
     trim: true,
     required: true,
   },
+  likes: {
+    type: Number,
+    required: false,
+  },
+  coments: {
+    type: Number,
+    required: false,
+  },
+
   dateCreation: {
     type: Date,
     default: Date.now,
   },
+
 });
 
 module.exports = {

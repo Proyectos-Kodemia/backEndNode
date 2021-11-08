@@ -26,14 +26,13 @@ const userHandler = async (req,res,next)=>{
     console.log("token:", token)
     const payload = await jwt.verifyToken(token)
     console.log("payload:",payload)
-    const {id} = payload
-    console.log("id",id)
+    const {sub} = payload
+    console.log("id",sub)
 
-    const {userId} =req.params
-    
+    const {id} =req.params
+    console.log("UserId",id)
     try{
-
-        if(userId === id){
+        if(id === sub){
             console.log("entro al if")
         next()
         }else{
@@ -49,5 +48,35 @@ const userHandler = async (req,res,next)=>{
     }
 }
 
+const postHandler = async (req,res,next)=>{
 
-module.exports = {authHandler,userHandler}
+    const {token} =req.headers
+  
+    const payload = await jwt.verifyToken(token)
+    
+    const {sub} = payload
+    
+    const userObject = await user.getById(sub)
+    const {idAuthor} = userObject   
+    
+    try{
+
+        if(idAuthor === sub){
+           
+        next()
+        }else{
+            throw new Error("Id Usuario no corresponde")
+        }
+    }catch(error){
+        res.status(403).json({
+            ok:false,
+            message:"No tienes permiso de modificar un post no creado por ti",
+            error:error,
+        })
+        next(error)
+    }
+}
+
+
+
+module.exports = {authHandler,userHandler,postHandler}

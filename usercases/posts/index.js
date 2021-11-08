@@ -2,9 +2,9 @@ const Post = require("../../models/posts");
 const encrypt = require("../../lib/crypt");
 const jwt = require("../../lib/jwt");
 
-const create=async (dataPost,userName)=>{
+const create=async (dataPost,userName,idAuthor)=>{
     const {image,title,tags,textContainer} = dataPost
-    const post =new Post.model ({userName,image,title,tags,textContainer});
+    const post =new Post.model ({userName,idAuthor,image,title,tags,textContainer});
     const savedPost=await post.save();
     return savedPost;
 };
