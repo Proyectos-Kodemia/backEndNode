@@ -1,5 +1,5 @@
 const express = require("express");
-const user = require("../usercases/user");
+const tags = require("../usercases/hashtags");
 
 const router = express.Router();
 
@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   
-  const tagsObject = await user.getAll();
+  const tagsObject = await tags.getAll();
   try {
     res.status(200).json({
       status:true,

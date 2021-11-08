@@ -7,7 +7,7 @@ const apiRouter=(app)=>{
     app.use("/users",userRouter);
     app.use("/posts",postRouter);
     app.use("/auth",authRouter);
-    app.use("/auth",hashTagsRouter);
+    app.use("/tags",hashTagsRouter);
 }
 
 module.exports=apiRouter;
