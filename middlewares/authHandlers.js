@@ -70,11 +70,7 @@ const postHandler = async (req,res,next)=>{
         if(idAuthor === sub){
            console.log("entro al if")
            next()
-           res.status(200).json({
-               status:true,
-               message:`Post ${id} succesfully modified`,
-               
-           })
+        
         }else{
             throw new Error("Id Usuario no corresponde")
         }
