@@ -92,14 +92,15 @@ router.post("/", async (req, res, next) => {
 router.patch("/:id", postHandler, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { title, textContainer } = req.body;
+    const { title, textContainer,image,tags } = req.body;
 
-    const payload = await post.update(id, { title, textContainer });
+    const payload = await post.update(id, { title, textContainer,image,tags });
       if (!payload) {
         throw new Error("Post not found");
       }
     }catch (err){
-        next(err);
+
+      next(err);
       console.log(err);
     }
   }
@@ -107,7 +108,7 @@ router.patch("/:id", postHandler, async (req, res, next) => {
 
 
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id",postHandler, async (req, res, next) => {
   const { id } = req.params;
   try {
     const postDel = await post.del(id);

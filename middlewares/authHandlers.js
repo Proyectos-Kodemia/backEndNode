@@ -1,4 +1,6 @@
 const jwt = require("../lib/jwt")
+const user = require("../usercases/user/index")
+const post = require("../usercases/posts/index")
 
 const authHandler = async (req,res,next)=>{
     const {token} = req.headers
@@ -51,19 +53,28 @@ const userHandler = async (req,res,next)=>{
 const postHandler = async (req,res,next)=>{
 
     const {token} =req.headers
-  
     const payload = await jwt.verifyToken(token)
-    
     const {sub} = payload
-    
-    const userObject = await user.getById(sub)
-    const {idAuthor} = userObject   
-    
-    try{
 
+
+    console.log("Sub",sub)
+    const {id} = req.params
+    
+    const postObject = await post.getById(id)
+    
+
+    const {idAuthor} = postObject   
+    console.log("idAuthor",idAuthor)
+
+    try{
         if(idAuthor === sub){
-           
-        next()
+           console.log("entro al if")
+           next()
+           res.status(200).json({
+               status:true,
+               message:`Post ${id} succesfully modified`,
+               
+           })
         }else{
             throw new Error("Id Usuario no corresponde")
         }

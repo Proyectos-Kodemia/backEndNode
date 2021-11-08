@@ -49,9 +49,16 @@ const del = (postId) => {
 }
 
 
+const update=async(postId,postData)=>{
+    const {title,image,tags,textContainer} = postData
+    return await Post.model.findByIdAndUpdate(postId,{title,tags,image,textContainer}).exec()
+
+}
+
 module.exports ={
     create,
     get,
     getById,
     del,
+    update,
 }
