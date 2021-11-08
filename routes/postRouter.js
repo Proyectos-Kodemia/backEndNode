@@ -6,64 +6,59 @@ const { authHandler, userHandler,postHandler} = require("../middlewares/authHand
 
 const router = express.Router();
 
-  
 router.get("/", async (req, res, next) => {
-    //posts/?search=
-    //posts/?date=
-       
-   const {search} = req.query
-   const {date} = req.query
+  //posts/?search=
+  //posts/?date=
 
-   console.log("search req.query:",search)
-   console.log("date req.query:",date)
-   try {
-    
-        const postRetrieve = await post.get(search,date)
-        res.status(200).json({
-            ok:true,
-            message:`Posts retrieved`,
-            payload:{
-                postRetrieve,
-            }
-        })
-   }catch (err) {
-     next(err);
-     console.log(err);
-   }
- });
+  const { search } = req.query;
+  const { date } = req.query;
 
-
-  
-router.get("/:id", async (req, res, next) => {
-  const {id} = req.params
+  console.log("search req.query:", search);
+  console.log("date req.query:", date);
   try {
-    const postId = await post.getById(id)
-       if(postId){
-          res.status(200).json({
-            ok:true,
-            message:`Post {id} retrieved`,
-            payload:{
-                postId,
-          }
-        })
-        }else{
-          res.status(404).json({
-            ok:false,
-            message:`Post id not found`,
-            payload:{
-                postId,
-            }
-          })
-        }
-   }catch (err) {
-     next(err);
-     console.log(err);
+    const postRetrieve = await post.get(search, date);
+    res.status(200).json({
+      ok: true,
+      message: `Posts retrieved`,
+      payload: postRetrieve,
+    });
+  } catch (err) {
+    next(err);
+    console.log(err);
+  }
+});
+
+router.get("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const postId = await post.getById(id);
+    if (postId) {
+      res.status(200).json({
+        ok: true,
+        message: `Post {id} retrieved`,
+        payload: {
+          postId,
+        },
+      });
+    } else {
+      res.status(404).json({
+        ok: false,
+        message: `Post id not found`,
+        payload: {
+          postId,
+        },
+      });
     }
+  } catch (err) {
+    next(err);
+    console.log(err);
+  }
 });
 
 router.use(authHandler);
 
 router.post("/", async (req, res, next) => {
+
     const {token} = req.headers
     
     const dataPost = req.body
@@ -93,8 +88,6 @@ router.post("/", async (req, res, next) => {
 
 
 
-
-
 // Usamos userhHandler para que solo el usuario puede modificar su propio registro
 router.patch("/:id", postHandler, async (req, res, next) => {
   try {
@@ -102,32 +95,34 @@ router.patch("/:id", postHandler, async (req, res, next) => {
     const { title, textContainer } = req.body;
 
     const payload = await post.update(id, { title, textContainer });
-    if (!payload) {
-      throw new Error("Post not found");
-    }
-    } catch (err) {
+      if (!payload) {
+        throw new Error("Post not found");
+      }
+    }catch (err){
         next(err);
-        console.log(err);
-}
-})
-  
- 
-  
-  router.delete("/:id",postHandler, async (req, res, next) => {
-      const {id}= req.params
-    try {
-        const postDel = await post.del(id)
-                res.status(200).json({
-            ok:true,
-            message:`Post ${id} deleted`,
-            payload:{
-                postDel,
-            }
-        })
-    } catch (err) {
-      next(err);
       console.log(err);
     }
-  });
-  
-  module.exports=router;
+  }
+)
+
+
+
+router.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const postDel = await post.del(id);
+    res.status(200).json({
+      ok: true,
+      message: `Post ${id} deleted`,
+      payload: {
+        postDel,
+      },
+    });
+  } catch (err) {
+    next(err);
+    console.log(err);
+  }
+});
+
+module.exports = router;
+
