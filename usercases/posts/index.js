@@ -20,10 +20,9 @@ const get = async (search,date) => {
         console.log("get user case:",search)
         // .find({ $or: [ ] })
         // {title:{ $regex:search}}
-        let regx=`/${search}/ig`
-        
-
-        resp=await Post.model.find({$or:[{userName:{$regex:regx}},{title:{$regex:regx}},{tags:{$regex:regx}}, {textContainer:{$regex:regx}}]}).exec();
+        // let regx=`/${search}/ig`
+        // resp = await Post.model.find({$or:[{userName:{$regex:regx}},{title:{$regex:regx}},{tags:{$regex:regx}},{textContainer:{$regex:regx}}]}).exec();
+        resp = await Post.model.find({$or:[{userName:{$regex:search}},{title:{$regex:search}},{tags:{$regex:search}},{textContainer:{$regex:search}}]}).exec();
     }else if(date){
         
         const dateInit = new Date(date)
